@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="box">
+    <header style="background: #fff; color: #000000; font-weight: bold;">
+      <h3>Você está excluindo: {{ selected_custo.descricao }} | R$ {{ selected_custo.valor }} | {{true == selected_custo.credito ? 'Crédito' : 'Custo' }} </h3>
+    </header>
+    <button style="margin: 5px" (click)="cancelClicked()" class="btn btn-outline-success">Cancelar</button>
+    <button style="margin: 5px" (click)="delete()" class="btn btn-outline-danger">Excluir</button>
+  </div>
+</div>

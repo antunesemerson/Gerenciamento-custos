@@ -1,0 +1,52 @@
+<header style="background: #fff; color: #000000; font-weight: bold;">
+  <h1 style="margin: 10px;"><b>Custos</b></h1>
+  <button style="position: absolute; right: 150px; margin-top: 13px;" (click)="newCusto()" class="btn btn-outline-success">Novo</button>
+  <button style="position: absolute; right: 10px; margin-top: 13px;" class="btn btn-outline" (click)="dashboard()">Dahboard</button>
+</header>
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex.gt-sm="100%" fxFlex="100">
+    <div class="p-l-20 p-r-20 p-b-20">
+          <div class="bodyDocs">
+            <table style="margin-top: 0;" class="table table-hover">
+              <thead>
+                <tr>
+                  <th style="text-align: center;">Descrição</th>
+                  <th style="text-align: center;">Valor</th>
+                  <th style="text-align: center;">Início</th>
+                  <th style="text-align: center;">Fim</th>
+                  <th style="text-align: center;">Tipo</th>
+                  <th style="text-align: center;">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: center;"><b>Total:</b></td>
+                  <td style="text-align: center;"><b>R$ {{ total }}</b></td>
+                  <td style="text-align: center;"></td>
+                  <td style="text-align: center;"></td>
+                  <td style="text-align: center;"></td>
+                  <td style="text-align: center;"></td>
+                </tr>
+              </tbody>
+              <tbody>
+                <tr *ngFor="let custo of items | orderBy: order">
+                  <td style="text-align: center;">{{ custo.descricao }}</td>
+                  <td style="text-align: center;">R$ {{ custo.valor }}</td>
+                  <td style="text-align: center;">{{ custo.inicio | date:'dd/MM/yyyy' }}</td>
+                  <td style="text-align: center;">{{ custo.fim | date:'dd/MM/yyyy' }}</td>
+                  <td style="text-align: center;">{{true == custo.credito ? 'Crédito' : 'Custo' }}</td>
+                  <td style="text-align: center;">
+                    <button mat-icon-button>
+                      <mat-icon (click)="deleteClicked(custo)">delete</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                      <mat-icon (click)="editClicked(custo)">edit</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>
+  </div>
+</div>

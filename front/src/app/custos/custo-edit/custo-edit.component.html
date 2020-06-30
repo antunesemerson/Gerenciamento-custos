@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="box">
+      <header style="background: #fff; color: #000000; font-weight: bold;">
+          <h3>Você está editando: {{ selected_custo.descricao }} | R$ {{ selected_custo.valor }} |
+              {{ selected_custo.credito }}</h3>
+      </header>
+      <form [formGroup]="registerForm" (ngSubmit)="update()">
+
+        <div class="form-group" [style.fontSize.px]="18">
+          <mat-form-field>
+            <input matInput placeholder="Descrição" formControlName="descricao" [ngClass]="{'is-invalid': submitted && f.descricao.errors }" type="text" [(ngModel)]="selected_custo.descricao"> <br>
+            <mat-error *ngIf="submitted && f.descricao.errors" class="invalid-feedback">
+                <mat-error style="font-size: small;" role="alert" *ngIf="f.descricao.errors.required">Descrição é obrigatório</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group" [style.fontSize.px]="18">
+          <mat-form-field>
+            <input matInput placeholder="Valor" formControlName="valor" [ngClass]="{'is-invalid': submitted && f.valor.errors }" type="number" [(ngModel)]="selected_custo.valor"> <br>
+            <mat-error *ngIf="submitted && f.valor.errors" class="invalid-feedback">
+              <mat-error style="color: red" role="alert" *ngIf="f.valor.errors.required">Valor é obrigatório</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group" [style.fontSize.px]="18">
+          <mat-form-field>
+            <input matInput placeholder="Data Início" formControlName="inicio" [ngClass]="{'is-invalid': submitted && f.inicio.errors }" type="date" [(ngModel)]="selected_custo.inicio"> <br>
+            <mat-error *ngIf="submitted && f.inicio.errors" class="invalid-feedback">
+              <mat-error style="color: red" role="alert" *ngIf="f.inicio.errors.required">Data Início é obrigatório</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group" [style.fontSize.px]="18">
+          <mat-form-field>
+            <input matInput placeholder="Data Fim" formControlName="fim" [ngClass]="{'is-invalid': submitted && f.fim.errors }" type="date" [(ngModel)]="selected_custo.fim"> <br>
+            <mat-error *ngIf="submitted && f.fim.errors" class="invalid-feedback">
+                <mat-error style="font-size: small;" role="alert" *ngIf="f.fim.errors.required">Data Fim é obrigatório</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group" [style.fontSize.px]="18">
+          Tipo:<br><br>
+          <mat-radio-group formControlName="tipo" [(ngModel)]="selected_custo.credito">
+            <mat-radio-button class="example-radio-button" *ngFor="let b of booleano" [value]="b.value">
+              <div style="margin-right: 10px;">{{ b.label }}</div>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <button Style="margin: 5px" (click)="cancelClicked()" class="btn btn-outline-danger">Cancelar</button>
+        <button style="margin: 5px;" (click)="update()" class="btn btn-outline-success">Atualizar</button>
+      </form>
+  </div>
+</div>
