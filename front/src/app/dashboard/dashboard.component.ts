@@ -14,46 +14,43 @@ export class DashboardComponent implements OnInit {
   total = 0;
   items: CustosItem[];
   public descricao: Array<any> = [];
+  public valor: Array<any> = [
+    { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], label: 'Custo Mensal' },
+  ];
+  public descricaoAno: Array<any> = [];
+  public valorAno: Array<any> = [
+    { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], label: 'Custo Anual' },
+  ];
 
-  public chartType = 'bar';
   public chartDatasets: Array<any> = [
     { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], label: 'My First dataset' },
     { data: [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1], label: 'My Second dataset' }
   ];
+  public saldoDatasets: Array<any> = [
+    { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], label: 'My First dataset' }
+  ];
+
   public chartLabels: Array<any> = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   public chartColors: Array<any> = [
     {
-      backgroundColor: [
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)',
-        'rgba(235,40,40,1)'
-      ],
+      backgroundColor: 'rgba(235,40,40,1)',
       borderWidth: 0,
     },
     {
-      backgroundColor: [
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)',
-        'rgba(9,163,9, 1)'
-      ],
+      backgroundColor: 'rgba(9,163,9, 1)',
+      borderWidth: 0,
+    }
+  ];
+  public chartColorsLine: Array<any> = [
+    {
+      backgroundColor: 'rgba(29, 29, 225, .2)',
+      borderColor: 'rgba(29, 29, 225, .7)',
+      borderWidth: 2,
+    }
+  ];
+  public chartColorsHorizontBar: Array<any> = [
+    {
+      backgroundColor: 'rgba(10, 76, 198, 1)',
       borderWidth: 0,
     }
   ];
@@ -131,13 +128,86 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.api.getAllCustos().subscribe(
       data => {
+        let j = 0;
         for (let i = 0; i < data.length; i++) {
-          this.descricao[i] = data[i].descricao;
+          if (data[i].inicio <= this.hojeDate && data[i].fim >= this.hojeDate) {
+            if (!data[i].credito) {
+              this.descricao[j] = data[i].descricao;
+              this.valor[0].data[j] = data[i].valor;
+              this.valor[0].label = 'Custo Mensal';
+              j = j + 1;
+            }
+          }
         }
-        //this.chartLabels = this.descricao;
+
+        let z = 0;
         for (let i = 0; i < data.length; i++) {
-          //this.chartDatasets[0].data[i] = data[i].valor;
+          if (!data[i].credito) {
+            if (data[i].inicio <= this.janDateInicio && data[i].fim >= this.janDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.fevDateInicio && data[i].fim >= this.fevDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.marDateInicio && data[i].fim >= this.marDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.abrDateInicio && data[i].fim >= this.abrDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.maiDateInicio && data[i].fim >= this.maiDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.junDateInicio && data[i].fim >= this.junDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.julDateInicio && data[i].fim >= this.julDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.agoDateInicio && data[i].fim >= this.agoDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.setDateInicio && data[i].fim >= this.setDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.outDateInicio && data[i].fim >= this.outDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.novDateInicio && data[i].fim >= this.novDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            if (data[i].inicio <= this.dezDateInicio && data[i].fim >= this.dezDateFim) {
+              this.descricaoAno[z] = data[i].descricao;
+              this.valorAno[0].data[z] = this.valorAno[0].data[z] + data[i].valor;
+              this.valorAno[0].label = 'Custo Anual';
+            }
+            z = z + 1;
+          }
         }
+        console.log(this.descricaoAno);
+        console.log(this.valorAno);
 
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < data.length; i++) {
@@ -237,6 +307,10 @@ export class DashboardComponent implements OnInit {
           { data: [this.janCusto, this.fevCusto, this.marCusto, this.abrCusto, this.maiCusto, this.junCusto, this.julCusto, this.agoCusto, this.setCusto, this.outCusto, this.novCusto, this.dezCusto], label: 'Custo' },
           // tslint:disable-next-line: max-line-length
           { data: [this.janCredito, this.fevCredito, this.marCredito, this.abrCredito, this.maiCredito, this.junCredito, this.julCredito, this.agoCredito, this.setCredito, this.outCredito, this.novCredito, this.dezCredito], label: 'Credito' }
+        ];
+        this.saldoDatasets = [
+          // tslint:disable-next-line: max-line-length
+          { data: [this.janCredito - this.janCusto, this.fevCredito - this.fevCusto, this.marCredito - this.marCusto, this.abrCredito - this.abrCusto, this.maiCredito - this.maiCusto, this.junCredito - this.junCusto, this.julCredito - this.julCusto, this.agoCredito - this.agoCusto, this.setCredito - this.setCusto, this.outCredito - this.outCusto, this.novCredito - this.novCusto, this.dezCredito - this.dezCusto], label: 'Saldo' },
         ];
       },
       error => {
